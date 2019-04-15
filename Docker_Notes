@@ -1,0 +1,11 @@
+Docker Cloud | Docker Hub
+
+Docker Steps:
+            
+1) Within file directory run: docker-compose up -d
+2) docker-compose down
+3) docker container ls : shows running containers -a (all)
+
+4) To fix permissions => /var/lib/docker/overlays2  = change file owner add rw
+    search same for config.inc.php = change group access to read only
+
