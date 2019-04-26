@@ -1,5 +1,57 @@
 <?
 
+function pageBanner($BannerArgs = null) {
+
+    // if no Banner Title set in page.php use default page title
+
+    if (!$BannerArgs['title']) {
+
+       $BannerArgs['title'] = get_the_title();
+    }
+
+    // if no Banner SubTitle set in page.php use default page Subtitle
+    if (!$BannerArgs['subtitle']) {
+
+       $BannerArgs['subtitle'] = get_field('page_banner_subtitle');
+    }
+
+    if (!$BannerArgs['photo']) {
+
+        if(get_field ('page_banner_background_image')) {
+
+            // set Banner Image from custom field entity
+            $BannerArgs['photo'] = get_field('page_banner_background_image')['sizes']['pageBanner'];
+        } else {
+
+            // location of default image
+            $BannerArgs['photo'] = get_theme_file_uri('/images/ocean.jpg');
+        } 
+    }
+
+
+    ?>
+
+<div class="page-banner">
+    <div class="page-banner__bg-image" 
+    style="background-image: url(<?php 
+    
+    echo $BannerArgs['photo'];
+    //$pageBannerImage = get_field('page_banner_background_image');
+    // echo $pageBannerImage['url'] 
+   // echo $pageBannerImage['sizes']['pageBanner'] // 
+    ?>) ;"></div>
+    <div class="page-banner__content container container--narrow">
+      <h1 class="page-banner__title"><?php echo $BannerArgs['title'] //the_title() ?></h1>
+      <div class="page-banner__intro">
+        <p><?php echo $BannerArgs['subtitle']; ?></p>
+      </div>
+    </div>  
+  </div>
+
+    <?php
+}
+
+
 function university_files() {
 
                 //      name-tag                    JS file location,   dependencies, version, load end of page
@@ -20,14 +72,25 @@ function university_features() {
     */
 
     add_theme_support('title-tag'); // set site title 
+    add_theme_support('post-thumbnails'); // create entitle featured image
+    add_image_size('professorLandscape', 400, 260, true );
+    add_image_size('professorPortrait', 400, 650, true );
+    add_image_size('pageBanner', 1500, 350, true );
 }
 
 add_action( 'after_setup_theme', 'university_features'); // wp function call after theme loaded
 
 function university_adjust_queries($query) {
 
+    if(!is_admin() and is_post_type_archive('program') and $query->is_main_query()) { // change behaviour of program archive post
+        $query->set('orderby', 'title');
+        $query->set('order', 'ASC');
+        $query->set('posts_per_page', -1);
+
+    }
+
     $today = date('Ymd');
-    if (!is_admin() AND is_post_type_archive('event') and $query->is_main_query()) {
+    if (!is_admin() AND is_post_type_archive('event') and $query->is_main_query()) { // change behaviour of events archive post
         $query->set('meta_key', 'event_date');
         $query->set('orderby', 'meta_value_num');
         $query->set('order', 'ASC');

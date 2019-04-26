@@ -9,7 +9,7 @@
       <h2 class="headline headline--medium">We think you&rsquo;ll like it here.</h2>
       <h3 class="headline headline--small">Why don&rsquo;t you check out the
            <strong>major</strong> you&rsquo;re interested in?</h3>
-      <a href="#" class="btn btn--large btn--blue">Find Your Major</a>
+      <a href="<?php echo get_post_type_archive_link('program'); ?>" class="btn btn--large btn--blue">Find Your Major</a>
     </div>
   </div>
 
@@ -22,14 +22,14 @@
 
           $today = date('Ymd');
 
-          $homepageEvents = new WP_Query(array(
+          $homepageEvents = new WP_Query(array(  // Custom Query to get Customer Entity Event
 
             'posts_per_page' => 3,
             'post_type' => 'event',
             'meta_key' => 'event_date',
             'orderby' => 'meta_value_num',
             'order' => 'ASC',
-            'meta_query' => array( array( 
+            'meta_query' => array( array(  // get Current upcoming Events
               'key' => 'event_date',
               'compare' => '>=',
               'value' => $today,
@@ -37,40 +37,18 @@
               ))
           ));
 
-          while($homepageEvents->have_posts()) {
+          while($homepageEvents->have_posts()) {  // Display Retrieved Events
 
-           $homepageEvents->the_post(); ?>
+           $homepageEvents->the_post(); 
 
-        <div class="event-summary">
-          <a class="event-summary__date t-center" href="#">
-            <span class="event-summary__month"><?php 
-            
-            $eventDate = new DateTime(get_field('event_date'));
-            echo $eventDate->format('M');
+              get_template_part('template-parts/content', 'event');  // include code from a file folder
+            //  get_template_part('folderName/fileName', 'DashExtension' );  // include dynamic page contents
 
-            // the_field('event_date');
-             ?></span>
-            <span class="event-summary__day"><?php echo $eventDate->format('d'); ?></span>  
-          </a>
-          <div class="event-summary__content">
-            <h5 class="event-summary__title headline headline--tiny">
-              <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
-            <p><?php 
-                      if (has_excerpt()) {
-                        echo get_the_excerpt();
-                      } else {
-                        echo wp_trim_words(get_the_content(),18);
-                      }
-            ?>
-                 <a href="<?php the_permalink(); ?>" class="nu gray">Learn more</a></p>
-          </div>
-        </div>
-           <?php
-          }
-        ?>
 
-        
-      
+           }
+           ?>
+
+     
 
 <!--         <div class="event-summary">
           <a class="event-summary__date t-center" href="#">

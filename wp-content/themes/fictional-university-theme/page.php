@@ -3,18 +3,30 @@ get_header( );
 
 while(have_posts()) {
 
-    the_post(); ?>
+    the_post();
+    pageBanner(
+      
+ /*      array(
+ 'title' => 'Banner Title',       // Set Page Banner Title
+  'subtitle' => 'Banner Subtitle',  // Set Page Banner SubTitle
+  'photo' => 'https://vinylbannersprinting.co.uk/wp-content/uploads/2016/03/Gp-08-RA-PREVIEW.png'
+    ) */
+  );
+    
+    ?>
 
-<div class="page-banner">
+
+
+<!-- <div class="page-banner">
     <div class="page-banner__bg-image" 
-    style="background-image: url(<?php echo get_theme_file_uri('images/ocean.jpg') ?>) ;"></div>
+    style="background-image: url(<?php/* echo get_theme_file_uri('images/ocean.jpg') ?>) ;"></div>
     <div class="page-banner__content container container--narrow">
-      <h1 class="page-banner__title"><?php the_title() ?></h1>
+      <h1 class="page-banner__title"><?php the_title() */?></h1>
       <div class="page-banner__intro">
         <p>Learn how the school of your dreams got started.</p>
       </div>
     </div>  
-  </div>
+  </div> -->
 
   <div class="container container--narrow page-section">
 
