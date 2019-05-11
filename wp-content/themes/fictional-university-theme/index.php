@@ -31,7 +31,8 @@ pageBanner( array(
     the_post(); ?>
 
     <div class="post-item">
-      <h2><a class="headline headline--medium headline--post-title" style="text-decoration: none" href="<?php the_permalink(); ?>"><?php the_title(); ?> </a></h2>
+      <h2><a class="headline headline--medium headline--post-title" style="text-decoration: none" href="<?php the_permalink(); ?>">
+      <?php the_title(); ?> </a></h2>
 
     <div class="metabox">
       <p>Posted by <?php the_author_posts_link(); ?> on <?php the_time('j M Y')?> in 

@@ -1,6 +1,23 @@
 <?php
 
-function university_post_types() {
+function university_post_types() { // initializes new entities 
+
+
+        //  Campus Post Type (This is an entity)
+        register_post_type('Campus', array(     // Add new menu 'Events' in Wordpress Admin
+
+            'supports' => array('title', 'editor', 'excerpt'),
+            'rewrite' => array('slug' => 'campuses'),
+            'has_archive' => true,
+            'public' => true,
+            'labels' => array('name' => 'Campuses',               // set menu name 
+                             'add_new_item' => 'Add New Campus',   // change display name from Post to Campus
+                             'edit_item' => 'Edit Campus',
+                             'all_items' => 'All Campuses',
+                             'singular_name' => 'Campus'
+                            ),  
+            'menu_icon' => 'dashicons-location-alt'   //  set menu icon
+        ));
 
     // Event Post Type (This is an entity)
     register_post_type('event', array(     // Add new menu 'Events' in Wordpress Admin
@@ -51,6 +68,6 @@ function university_post_types() {
     ));
 }
 
-add_action('init', 'university_post_types');  // Add a new menu in Wordpress Admin
+add_action('init', 'university_post_types');  // Add new menus in Wordpress Admin
 
 ?>

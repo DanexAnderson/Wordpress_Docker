@@ -55,6 +55,9 @@ function pageBanner($BannerArgs = null) {
 function university_files() {
 
                 //      name-tag                    JS file location,   dependencies, version, load end of page
+    wp_enqueue_script('googleMap', '//maps.googleapis.com/maps/api/js?key=AIzaSyBt3MPXR1wiTsp9caPeGQ54lHqQjJKQwhY', null, microtime(), true);
+
+                //      name-tag                    JS file location,   dependencies, version, load end of page
     wp_enqueue_script('main_university_js', get_theme_file_uri('/js/scripts-bundled.js'), null, microtime(), true);
     wp_enqueue_style('custom_google_fonts', 
 '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
@@ -82,6 +85,12 @@ add_action( 'after_setup_theme', 'university_features'); // wp function call aft
 
 function university_adjust_queries($query) {
 
+    if(!is_admin() and is_post_type_archive('campus') and $query->is_main_query()) { // change behaviour of Campus archive post
+        
+        $query->set('posts_per_page', -1);
+
+    }
+
     if(!is_admin() and is_post_type_archive('program') and $query->is_main_query()) { // change behaviour of program archive post
         $query->set('orderby', 'title');
         $query->set('order', 'ASC');
@@ -107,6 +116,13 @@ function university_adjust_queries($query) {
 
 add_action( 'pre_get_posts', 'university_adjust_queries'); // intercept Query and Manipulate it
 
+function universityMayKey($api) {
+
+    $api['key'] = 'AIzaSyBt3MPXR1wiTsp9caPeGQ54lHqQjJKQwhY';
+    return $api;
+}
+
+add_filter('acf/fields/google_map/api', 'universityMapKey');
 
 
 ?>
