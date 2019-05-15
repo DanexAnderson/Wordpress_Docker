@@ -56,6 +56,7 @@ function university_post_types() { // initializes new entities
      // Professor Post Type (This is an entity)
      register_post_type('professor', array(     // Add new menu 'Events' in Wordpress Admin
 
+        'show_in_rest' => true,  // Show this custom entity in Rest Api Request
         'supports' => array('title', 'editor', 'thumbnail'), // To add pics
         'public' => true,
         'labels' => array('name' => 'Professors',               // set menu name 
