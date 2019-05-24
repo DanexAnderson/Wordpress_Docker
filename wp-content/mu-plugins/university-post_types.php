@@ -4,9 +4,11 @@ function university_post_types() { // initializes new entities
 
 
         //  Campus Post Type (This is an entity)
-        register_post_type('Campus', array(     // Add new menu 'Events' in Wordpress Admin
+        register_post_type('campus', array(     // Add new menu 'Events' in Wordpress Admin
 
-            'supports' => array('title', 'editor', 'excerpt'),
+            'capability_type' => 'campus',  // Add a custom user role
+            'map_meta_cap' => true,  // enforce custom user role permissions
+            'supports' => array('title', 'editor', 'excerpt'),  // Add field types to the entity
             'rewrite' => array('slug' => 'campuses'),
             'has_archive' => true,
             'public' => true,
@@ -22,8 +24,10 @@ function university_post_types() { // initializes new entities
     // Event Post Type (This is an entity)
     register_post_type('event', array(     // Add new menu 'Events' in Wordpress Admin
 
-        'supports' => array('title', 'editor', 'excerpt'),
-        'rewrite' => array('slug' => 'events'),
+        'capability_type' => 'event', // to set a custom user role
+        'map_meta_cap' => true,  // enforce events capabilities permissions
+        'supports' => array('title', 'editor', 'excerpt'), // Add field types to the entity
+        'rewrite' => array('slug' => 'events'), // to set the url
         'has_archive' => true,
         'public' => true,
         'labels' => array('name' => 'Events',               // set menu name 
@@ -39,7 +43,8 @@ function university_post_types() { // initializes new entities
     // Program Post Type (This is an entity)
     register_post_type('program', array(     // Add new menu 'Events' in Wordpress Admin
 
-        'supports' => array('title', 'editor'),
+        //'supports' => array('title', 'editor'), // 'editor' this is the default content field in the entity
+        'supports' => array('title'),
         'rewrite' => array('slug' => 'programs'),
         'has_archive' => true,
         'public' => true,
@@ -63,12 +68,33 @@ function university_post_types() { // initializes new entities
                          'add_new_item' => 'Add New Professor',   // change display name from Post to Event
                          'edit_item' => 'Edit Professor',
                          'all_items' => 'All Professors',
-                         'singular_name' => 'professor'
+                         'singular_name' => 'Professor'
                         ),  
         'menu_icon' => 'dashicons-welcome-learn-more'   //  set menu icon 
+    ));
+
+    // Note Post Type
+    register_post_type('note', array(     // Add new menu 'Note' in Wordpress Admin
+
+        'capability_type' => 'note', // to set a custom user role
+        'map_meta_cap' => true,  // enforce events capabilities permissions
+        'show_in_rest' => true,  // Show this custom entity in Rest Api Request
+        'supports' => array('title', 'editor'), // 
+        'public' => false,
+        'show_ui' => true, // to show note in admin dashboard
+        'labels' => array('name' => 'Notes',               // set menu name 
+                         'add_new_item' => 'Add New Note',   // change display name from Post to Event
+                         'edit_item' => 'Edit Note',
+                         'all_items' => 'All Notes',
+                         'singular_name' => 'Note'
+                        ),  
+        'menu_icon' => 'dashicons-welcome-write-blog'   //  set menu icon 
     ));
 }
 
 add_action('init', 'university_post_types');  // Add new menus in Wordpress Admin
+
+
+
 
 ?>
