@@ -13,7 +13,7 @@ while(have_posts()) {
     
     ?>
 
-<!-- <div class="page-banner">
+<!-- <div class="page-banner">  // the_field('main_body_content'); // Access a custom field
     <div class="page-banner__bg-image" 
     style="background-image: url(<?php/* echo get_theme_file_uri('images/ocean.jpg') ?>) ;"></div>
     <div class="page-banner__content container container--narrow">
@@ -32,7 +32,7 @@ while(have_posts()) {
     </div>
 
   
-  <div class="generic-content"><?php the_content(); ?></div>
+  <div class="generic-content"><?php the_field('main_body_content'); ?></div>
 
   <?php 
 

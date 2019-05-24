@@ -35,7 +35,7 @@ while(have_posts()) {
 
   if($relatedPrograms) {
 
-   echo '<div class="generic-content"><?php the_content(); ?></div>
+   echo '<div class="generic-content">'. the_content().' </div>
 
   <hr class="section-break" >
   <h2 class="headline headline--medium"> Related Programs </h2>
